@@ -1,13 +1,14 @@
 install:
-	pip install -r requirements.txt
-
-lint:
-	pylint --disable=R,C --ignore-patterns=test_.*?py *.py
-
-format:	
-	black *.py 
+	pip install --upgrade pip &&\
+		pip install --prefer-binary -r requirements.txt
 
 test:
-	python -m pytest -vv --cov=main test_*.py
-		
+	py.test --nbval *.ipynb
+
+format:
+	nbqa black *.ipynb
+
+lint:
+	nbqa ruff *.ipynb
+
 all: install lint format test
